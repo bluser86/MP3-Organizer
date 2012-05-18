@@ -65,26 +65,35 @@ namespace MP3_Organizer
 
         public void Organize()
         {
-            StringBuilder builder = new StringBuilder();
+            if (Files.Count == 0)
+            {
+                Console.WriteLine("Run Index() first!");
+                return;
+            }
 
             foreach (string file in Files)
             {
+                // Create file path and name
                 string destFilePath = CreateDirectoryPath(file);
                 string destFileName = CreateFilePath(file);
 
-                Directory.CreateDirectory(Destination + destFilePath);
+                // Check if directory exists, otherwise create it
+                if (!Directory.Exists(Destination + destFilePath))
+                {
+                    Directory.CreateDirectory(Destination + destFilePath);
+                }
 
+                // Create full file path
                 string fullPath = Destination + destFilePath + destFileName;
 
                 Console.WriteLine(fullPath);
                 
+                // Check if file exists, otherwise copy file to new location
                 if(!File.Exists(fullPath))
                 {
                     File.Copy(file, fullPath);
                 }
             }
-
-            Console.Write(builder.ToString());
         }
 
         public override string ToString()
