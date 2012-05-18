@@ -34,12 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CUETools.Codecs">
-      <HintPath>lib\CUETools.Codecs.dll</HintPath>
-    </Reference>
-    <Reference Include="CUETools.Codecs.FLAKE">
-      <HintPath>lib\CUETools.Codecs.FLAKE.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
