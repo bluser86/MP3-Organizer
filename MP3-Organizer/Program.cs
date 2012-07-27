@@ -16,6 +16,7 @@ namespace MP3_Organizer
 
             allowed.Add(".flac");
             allowed.Add(".mp3");
+            allowed.Add(".m4a");
 
             string startIn;
             string destination = @"D:\Music\";
@@ -33,10 +34,10 @@ namespace MP3_Organizer
                 TrackOrganizer organizer = new TrackOrganizer(startIn, destination, allowed);
 
                 organizer.Index();
-
                 organizer.Organize();
 
-                Console.WriteLine("Done!");
+                Console.WriteLine("Done! Press any key to continue...");
+                Console.ReadKey();
             }
             else
             {

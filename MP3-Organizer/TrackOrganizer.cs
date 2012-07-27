@@ -117,6 +117,8 @@ namespace MP3_Organizer
             string performer = track.Tag.Performers[0];
             string album = track.Tag.Album;
 
+            track.Dispose();
+
             foreach (char c in invalid)
             {
                 performer = performer.Replace(c.ToString(), "");
@@ -141,6 +143,9 @@ namespace MP3_Organizer
             string invalid = new string(Path.GetInvalidFileNameChars());
 
             string title = track.Tag.Title;
+            string number = track.Tag.Track.ToString("D2");
+
+            track.Dispose();
 
             foreach (char c in invalid)
             {
@@ -151,7 +156,7 @@ namespace MP3_Organizer
 
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendFormat(@"{0}{1}", title, extension);
+            builder.AppendFormat(@"{2} - {0}{1}", title, extension, number);
 
             return builder.ToString();
         }
