@@ -114,7 +114,17 @@ namespace MP3_Organizer
 
             string invalid = new string(Path.GetInvalidPathChars());
 
-            string performer = track.Tag.Performers[0];
+            string performer;
+
+            if (track.Tag.Performers.Length > 1)
+            {
+                performer = string.Join("", track.Tag.Performers);
+            }
+            else
+            {
+                performer = track.Tag.Performers[0];
+            }
+
             string album = track.Tag.Album;
 
             track.Dispose();
@@ -125,12 +135,12 @@ namespace MP3_Organizer
                 album = album.Replace(c.ToString(), "");
             }
 
-            performer = TextInfo.ToTitleCase(performer.ToLower());
+            //performer = TextInfo.ToTitleCase(performer.ToLower());
             album = TextInfo.ToTitleCase(album.ToLower()).Replace("/", "-").Replace("?", "").Replace(":", "");
 
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendFormat(@"{0}\{1}\", performer, album);
+            builder.AppendFormat(@"\{0}\{1}\", performer, album);
 
             return builder.ToString();
         }
