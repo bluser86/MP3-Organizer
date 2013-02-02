@@ -21,12 +21,13 @@ namespace MP3_Organizer
             allowed.Add(".m4a");
 
             string startIn = "", destination = "";
+            bool errors = false;
             
             // Print welcome message
             Console.WriteLine("Welcome to the song indexing tool. This tool indexes your music " + Environment.NewLine +
                               "specified by fileformat. Everything is based on your IDv3 tags. " + Environment.NewLine +
-                              "If your tags don't match, the tool don't match, the tool will " + Environment.NewLine +
-                              "mess up the copying. Be very careful with your indexing scope!");
+                              "If your tags don't match, the tool will mess up the copying. Be " + Environment.NewLine +
+                              "very careful with your indexing scope!");
             Console.WriteLine(Environment.NewLine);
 
             // Print allowed formats
@@ -83,16 +84,29 @@ namespace MP3_Organizer
 
             Console.WriteLine("Start indexing and organizing procedure...");
             Console.Write(Environment.NewLine);
-            organizer.Index();
-            organizer.Organize();
+            try
+            {
+                organizer.Index();
+                organizer.Organize();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                errors = true;
+            }
+
             Console.Write(Environment.NewLine);
 
             stopwatch.Stop();
 
             // Print some nice stats
-            Console.WriteLine(string.Format(@"{0} tracks were renamed and moved to the target location.", organizer.Files.Count));
-            Console.WriteLine(string.Format(@"All tracks were indexed and organized in {0}.", stopwatch.Elapsed));
-            Console.Write(Environment.NewLine);
+            if (!errors)
+            {
+                Console.WriteLine(string.Format(@"{0} tracks were renamed and moved to the target location.", organizer.Files.Count));
+                Console.WriteLine(string.Format(@"All tracks were indexed and organized in {0}.", stopwatch.Elapsed));
+                Console.Write(Environment.NewLine);
+            }
 
             // And wait for last user input
             Console.WriteLine("Done! Press any key to continue...");

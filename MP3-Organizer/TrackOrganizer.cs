@@ -112,8 +112,22 @@ namespace MP3_Organizer
         {
             TagLib.File track = TagLib.File.Create(trackPath);
 
-            string invalid = new string(Path.GetInvalidPathChars());
+            if (track.Tag == null)
+            {
+                throw new Exception(string.Format("This track seems to be invalid and can't be read ({0})", trackPath));
+            }
 
+            if (track.Tag.Performers == null)
+            {
+                throw new Exception(string.Format("This track contains no artist information ({0})", trackPath));
+            }
+
+            if (track.Tag.Album == null)
+            {
+                throw new Exception(string.Format("This track contains no album information ({0})", trackPath));
+            }
+
+            string invalid = new string(Path.GetInvalidPathChars());
             string performer;
 
             if (track.Tag.Performers.Length > 1)
@@ -151,6 +165,11 @@ namespace MP3_Organizer
 
             string extension = Path.GetExtension(trackPath);
             string invalid = new string(Path.GetInvalidFileNameChars());
+
+            if (track.Tag.Title == null)
+            {
+                throw new Exception(string.Format("This track contains no title information ({0})", trackPath));
+            }
 
             string title = track.Tag.Title;
             string number = track.Tag.Track.ToString("D2");
@@ -193,6 +212,7 @@ namespace MP3_Organizer
             catch (SystemException e)
             {
                 Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
             }
         }
     }
